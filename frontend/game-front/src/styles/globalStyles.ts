@@ -12,6 +12,10 @@ export const GlobalStyles = createGlobalStyle`
             cursor: pointer;
         }
     }
+    body{
+        width:100%;
+        height: 100%;
+    }
     
 
 `
