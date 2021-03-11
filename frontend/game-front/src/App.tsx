@@ -1,5 +1,5 @@
 import React from 'react';
-import Canvas from './components/Canvas';
+import Canvas from './components/Tela/Canvas';
 import {GlobalStyles} from './styles/globalStyles'
 
 function App() {

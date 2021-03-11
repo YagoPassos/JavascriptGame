@@ -18,8 +18,8 @@ function Canvas({  }: CanvasProps) {
       const color = 'blue';
       const positionX = 50;
       const positionY = 50;
-      const width = 250;
-      const height = 250;
+      const width = 10;
+      const height = 10;
       if (context) {
         context.fillStyle = color;
         context.fillRect(positionX, positionY, width, height);
