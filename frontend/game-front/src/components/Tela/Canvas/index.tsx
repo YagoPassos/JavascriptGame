@@ -1,23 +1,20 @@
-import { ReactNode, useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useCallback } from 'react';
 import { CanvasContainer } from './styles';
 
+/* eslint-disable */
 
-interface CanvasProps {
-  // children: ReactNode;
-}
-
-function Canvas({ }: CanvasProps) {
+function Canvas() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  var context : any;
+  var context: any;
+  var game: any;
 
   useEffect(() => {
     if (canvasRef.current) {
-      
-      const canvas = canvasRef.current;
-      context = canvas.getContext('2d');
 
-      const game: any = {
+      context = canvasRef.current.getContext('2d');
+
+      game = {
         players: {
           'Bob': { x: 1, y: 1 },
           'Paul': { x: 8, y: 8 }
@@ -28,42 +25,31 @@ function Canvas({ }: CanvasProps) {
         }
       }
 
-      const renderScreen = () => {
-        if (context) {
+    }
 
-          context.clearRect(0,0,10,10);
+    const renderScreen = () => {
+      if (context) {
+        context.clearRect(0, 0, 10, 10);
 
-          for (var playerId in game.players) {
-            const player = game.players[playerId];
-            context.fillStyle = 'black';
-            context.fillRect(player.x, player.y, 1, 1);
-          }
+        for (var playerId in game.players) {
+          const player = game.players[playerId];
+          context.fillStyle = 'black';
+          context.fillRect(player.x, player.y, 1, 1);
+        }
 
-          for (var fruitId in game.fruits) {
-            const fruit = game.fruits[fruitId];
-            context.fillStyle = 'green';
-            context.fillRect(fruit.x, fruit.y, 1, 1);
-          }
+        for (var fruitId in game.fruits) {
+          const fruit = game.fruits[fruitId];
+          context.fillStyle = 'green';
+          context.fillRect(fruit.x, fruit.y, 1, 1);
         }
       }
-      renderScreen();
-      
-
-      const color = 'blue';
-      const positionX = 50;
-      const positionY = 50;
-      const width = 10;
-      const height = 10;
-      if (context) {
-        context.fillStyle = color;
-        context.fillRect(positionX, positionY, width, height);
-      }
     }
+    renderScreen();
 
   }, [context])
 
   return (
-    <CanvasContainer width="10" height="10" ref={canvasRef}/>
+    <CanvasContainer width="10" height="10" ref={canvasRef} />
   );
 };
 
