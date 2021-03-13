@@ -6,15 +6,15 @@ import { CanvasContainer } from './styles';
 function Canvas() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  var context: any;
-  var game: any;
+ const [context, setContext] : any = useState([]);
+ const [game, setGame] : any= useState([])
 
   useEffect(() => {
     if (canvasRef.current) {
 
-      context = canvasRef.current.getContext('2d');
+      setContext(canvasRef.current.getContext('2d'));
 
-      game = {
+      setGame( {
         players: {
           'Bob': { x: 1, y: 1 },
           'Paul': { x: 8, y: 8 }
@@ -23,13 +23,15 @@ function Canvas() {
         fruits: {
           'fruits': { x: 3, y: 1 }
         }
-      }
+      })
 
     }
 
     const renderScreen = () => {
       if (context) {
-        context.clearRect(0, 0, 10, 10);
+        // context.clearRect(0, 0, 10, 10);
+
+        console.log(context, game)
 
         for (var playerId in game.players) {
           const player = game.players[playerId];
