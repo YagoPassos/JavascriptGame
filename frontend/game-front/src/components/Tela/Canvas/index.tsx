@@ -21,19 +21,19 @@ function Canvas() {
         },
 
         fruits: {
-          'fruits': { x: 3, y: 1 }
+          'fruits': { x: 3, y: 3 }
         }
       })
 
     }
 
-    const renderScreen = () => {
-      if (context) {
-        // context.clearRect(0, 0, 10, 10);
+      const renderScreen = () => {
+      if (context) {   
 
-        console.log(context, game)
 
-        for (var playerId in game.players) {
+          context.clearRect(0,0,10,10);
+
+          for (var playerId in game.players) {
           const player = game.players[playerId];
           context.fillStyle = 'black';
           context.fillRect(player.x, player.y, 1, 1);
@@ -48,7 +48,7 @@ function Canvas() {
     }
     renderScreen();
 
-  }, [context])
+  }, [])
 
   return (
     <CanvasContainer width="10" height="10" ref={canvasRef} />
