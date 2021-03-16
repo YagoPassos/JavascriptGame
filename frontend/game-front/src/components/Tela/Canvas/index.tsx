@@ -46,6 +46,7 @@ function Canvas() {
               context.fillStyle = 'green';
               context.fillRect(fruit.x, fruit.y, 1, 1);
             }
+            
           requestAnimationFrame(renderScreen);
         }
         renderScreen();
