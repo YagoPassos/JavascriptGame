@@ -4,7 +4,7 @@ import { CanvasContainer } from './styles';
 /* eslint-disable */
 
 interface Command {
-  playerId: string;
+  playerId: any;
   keyPressed: any;
 }
 
@@ -37,7 +37,6 @@ function Canvas() {
      
       const canvas = canvasRef.current;
       const context = canvas.getContext('2d');
-      const currentPlayerId = 'Bob';
 
      const createGame =() =>{
 
@@ -108,7 +107,7 @@ function Canvas() {
               context.fillRect(player.x, player.y, 1, 1);
             }
 
-            for (const fruitId in state.fruits) {
+            for (const fruitId in game.state.fruits) {
               const fruit = game.state.fruits[fruitId];
               context.fillStyle = 'green';
               context.fillRect(fruit.x, fruit.y, 1, 1);
