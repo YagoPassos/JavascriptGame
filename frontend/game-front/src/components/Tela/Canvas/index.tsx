@@ -4,7 +4,7 @@ import { CanvasContainer } from './styles';
 /* eslint-disable */
 
 interface Command {
-  playerId: any;
+  playerId: string;
   keyPressed: any;
 }
 
@@ -13,20 +13,23 @@ interface Coordinates{
   y:  number;
 }
 
-interface Players{
+interface Players {
   'Bob' : Coordinates;
   'Paul': Coordinates;
 }
 
+type PlayersIndex = keyof Players;
+
 interface Fruits{
-  fruits : Coordinates;
+  'fruits' : Coordinates;
 }
+
+type FruitsIndex = keyof Fruits;
 
 interface State{
   players: Players;
   fruits: Fruits;
 }
-
 
 function Canvas() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -55,7 +58,7 @@ function Canvas() {
           console.log(`Moving ${command.playerId} with ${command.keyPressed}`)
 
           const keyPressed = command.keyPressed;
-          const player = game.state.players[command.playerId]
+          const player = game.state.players[command.playerId as PlayersIndex]
 
           if (keyPressed === 'ArrowUp' && player.y - 1 >= 0){
             
@@ -102,13 +105,14 @@ function Canvas() {
             context.clearRect(0,0,10,10);
 
             for (const playerId in game.state.players) {
-              const player = game.state.players[playerId];
+              const player = game.state.players[playerId as PlayersIndex];
+              console.log(player)
               context.fillStyle = 'black';
               context.fillRect(player.x, player.y, 1, 1);
             }
 
             for (const fruitId in game.state.fruits) {
-              const fruit = game.state.fruits[fruitId];
+              const fruit = game.state.fruits[fruitId as FruitsIndex];
               context.fillStyle = 'green';
               context.fillRect(fruit.x, fruit.y, 1, 1);
             }
