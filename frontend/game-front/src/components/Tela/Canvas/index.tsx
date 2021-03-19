@@ -61,16 +61,21 @@ function Canvas() {
           const player = game.state.players[command.playerId as PlayersIndex]
 
           if (keyPressed === 'ArrowUp' && player.y - 1 >= 0){
+            player.y = player.y - 1
+            return
             
           }
-          if (keyPressed === 'ArrowRight' && player.x - 1 < 10){
-
+          if (keyPressed === 'ArrowRight' && player.x + 1 < 10){
+            player.x = player.x + 1
+            return
           }
-          if (keyPressed === 'ArrowDown' && player.x - 1 < 10){
-
+          if (keyPressed === 'ArrowDown' && player.y + 1 < 10){
+            player.y = player.y + 1
+            return
           }
-          if (keyPressed === 'ArrowLeft' && player.y - 1 >= 0){
-
+          if (keyPressed === 'ArrowLeft' && player.x - 1 >= 0){
+            player.x = player.x - 1
+            return
           }
        }
 
