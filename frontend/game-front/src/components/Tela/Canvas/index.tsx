@@ -89,7 +89,7 @@ function Canvas() {
       const createKeyboardListener = () => {
         
         const state = {
-          observers: []
+          observers: [] as any
         }
 
         function subscribe(obeserverFunction : any){
