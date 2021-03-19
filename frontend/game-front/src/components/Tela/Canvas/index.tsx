@@ -55,8 +55,6 @@ function Canvas() {
         }
 
         function movePlayer(command: Command) {
-          console.log(`Moving ${command.playerId} with ${command.keyPressed}`)
-
           const keyPressed = command.keyPressed;
           const player = game.state.players[command.playerId as PlayersIndex]
 
@@ -117,6 +115,9 @@ function Canvas() {
 
         document.addEventListener('keydown', handleKeydown)
 
+        return {
+          subscribe
+        }
 
 
       }
@@ -132,7 +133,6 @@ function Canvas() {
 
           for (const playerId in game.state.players) {
             const player = game.state.players[playerId as PlayersIndex];
-            console.log(player)
             context.fillStyle = 'black';
             context.fillRect(player.x, player.y, 1, 1);
           }
