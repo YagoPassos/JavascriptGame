@@ -96,6 +96,7 @@ function Canvas() {
 
         function notifyAll(command : Command) {
           console.log(`Notifying ${state.observers.length} observers`)
+          console.log(state)
 
           for (const observerFunction of state.observers){
             observerFunction(command)
@@ -115,16 +116,18 @@ function Canvas() {
 
         document.addEventListener('keydown', handleKeydown)
 
+        console.log(state)
+
         return {
           subscribe
         }
 
-
       }
 
       const keyboardListener = createKeyboardListener();
-      
       const game = createGame();
+      keyboardListener.subscribe(game.movePlayer)
+
 
 
 
