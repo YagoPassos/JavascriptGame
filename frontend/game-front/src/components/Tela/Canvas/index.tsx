@@ -123,6 +123,7 @@ function Canvas() {
       }
 
       const keyboardListener = createKeyboardListener();
+      
       const game = createGame();
 
 
