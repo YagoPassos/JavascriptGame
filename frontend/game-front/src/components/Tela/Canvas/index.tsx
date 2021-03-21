@@ -50,7 +50,7 @@ function Canvas() {
 
       const canvas = canvasRef.current;
       const context = canvas.getContext('2d');
-           
+
 
       const createGame = () => {
 
@@ -160,13 +160,15 @@ function Canvas() {
             if (playerId === 'Bob') {
               var img = new Image();
 
-              img.addEventListener('load', ()=>{
-                console.log(img)
-                console.log('teste')
-                context.drawImage(img, player.x, player.y, 5000, 5000)}, false)
-              
+              img.addEventListener('load',
+                () => {
+                  console.log(img)
+                  context.drawImage(img, player.x, player.y)
+                }
+                , false)
 
-              img.src = '../../../img/Bob.png';
+
+              img.src = '../../public/img/Bob.jpg';
 
 
             } else {
@@ -189,7 +191,7 @@ function Canvas() {
   }, [])
 
   return (
-      <CanvasContainer width={screen.width} height={screen.height} ref={canvasRef} />
+    <CanvasContainer width={screen.width} height={screen.height} ref={canvasRef} />
   );
 };
 
