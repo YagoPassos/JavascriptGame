@@ -54,7 +54,7 @@ function Canvas() {
         const state: State = {
           players: {
             'Bob': { x: 1, y: 1 },
-            'Paul': { x: 8, y: 8 }
+            'Paul': { x: 1800, y: 500 }
           },
 
           fruits: {
@@ -65,23 +65,23 @@ function Canvas() {
         function movePlayer(command: Command) {
           const accepetdMoves: KeyPressed = {
             ArrowUp(player: any) {
-              if(player.y - 1 >= 0) {
-                player.y = player.y - 1
+              if(player.y - 1 >= 10) {
+                player.y = player.y - 50
               }
             },
             ArrowRight(player: any) {
-              if(player.x + 1 < 10) {
-                player.x = player.x + 1
+              if(player.x + 1 < screen.width - 70) {
+                player.x = player.x + 50
               }
             },
             ArrowDown(player: any) {
-              if(player.y + 1 < 10) {
-                player.y = player.y + 1
+              if(player.y + 1 < screen.height - 70) {
+                player.y = player.y + 50
               }
             },
             ArrowLeft(player: any) {
-              if(player.x - 1 >= 0) {
-                player.x = player.x - 1
+              if(player.x - 1 >= 10) {
+                player.x = player.x - 50
               }
             }
           }
@@ -151,18 +151,19 @@ function Canvas() {
 
       if (context) {
         const renderScreen = () => {
-          context.clearRect(0, 0, 10, 10);
+          context.clearRect(0, 0, screen.width, screen.height);
 
           for (const playerId in game.state.players) {
             const player = game.state.players[playerId as PlayersIndex];
+
             context.fillStyle = 'black';
-            context.fillRect(player.x, player.y, 1, 1);
+            context.fillRect(player.x, player.y, 50, 50);
           }
 
           for (const fruitId in game.state.fruits) {
             const fruit = game.state.fruits[fruitId as FruitsIndex];
             context.fillStyle = 'green';
-            context.fillRect(fruit.x, fruit.y, 1, 1);
+            context.fillRect(fruit.x, fruit.y, 50, 50);
           }
 
           requestAnimationFrame(renderScreen);
@@ -173,7 +174,7 @@ function Canvas() {
   }, [])
 
   return (
-    <CanvasContainer width="10" height="10" ref={canvasRef} />
+    <CanvasContainer width={screen.width} height={screen.height} ref={canvasRef} />
   );
 };
 
