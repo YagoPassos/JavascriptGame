@@ -61,7 +61,7 @@ function Canvas() {
           players: {
             'Steve': { x: 1800, y: 1000 },
             'Paul': { x: 1800, y: 500 },
-            'Bob': { x: 1300, y: 500 }
+            'Bob': { x: 10, y: 10 }
           },
 
           fruits: {
@@ -153,6 +153,7 @@ function Canvas() {
       keyboardListener.subscribe(game.movePlayer)
 
 
+
       if (context) {
         const renderScreen = () => {
           context.clearRect(0, 0, screen.width, screen.height);
@@ -162,14 +163,10 @@ function Canvas() {
 
             if (playerId === 'Bob') {
               var img = new Image();
+              img.src = '../../../img/Bob.svg';
 
-              img.onload = () => {
-                  console.log(img)
-                  context.drawImage
-                }
-              
-              img.src = '../../../../public/img/Bob.jpg';
-
+              context.drawImage(img, player.x, player.y, 30, 45)
+           
             } else {
               context.fillStyle = 'black';
               context.fillRect(player.x, player.y, 35, 35);
@@ -188,6 +185,7 @@ function Canvas() {
       }
     }
   }, [])
+
 
   return (
     <CanvasContainer width={screen.width} height={screen.height} ref={canvasRef} />
