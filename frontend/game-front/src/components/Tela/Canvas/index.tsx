@@ -18,7 +18,15 @@ interface Players {
   'Paul': Coordinates;
 }
 
+interface KeyPressed {
+  'ArrowUp': any;
+  'ArrowRight': any;
+  'ArrowDown': any;
+  'ArrowLeft': any;
+}
+
 type PlayersIndex = keyof Players;
+type KeyIndex = keyof KeyPressed;
 
 interface Fruits {
   'fruits': Coordinates;
@@ -55,26 +63,37 @@ function Canvas() {
         }
 
         function movePlayer(command: Command) {
+          const accepetdMoves: KeyPressed = {
+            ArrowUp(player: any) {
+              if(player.y - 1 >= 0) {
+                player.y = player.y - 1
+              }
+            },
+            ArrowRight(player: any) {
+              if(player.x + 1 < 10) {
+                player.x = player.x + 1
+              }
+            },
+            ArrowDown(player: any) {
+              if(player.y + 1 < 10) {
+                player.y = player.y + 1
+              }
+            },
+            ArrowLeft(player: any) {
+              if(player.x - 1 >= 0) {
+                player.x = player.x - 1
+              }
+            }
+          }
+
           const keyPressed = command.keyPressed;
           const player = game.state.players[command.playerId as PlayersIndex]
+          const moveFunction = accepetdMoves[keyPressed as KeyIndex]
 
-          if (keyPressed === 'ArrowUp' && player.y - 1 >= 0) {
-            player.y = player.y - 1
-            return
-
+          if (moveFunction) {
+            moveFunction(player)
           }
-          if (keyPressed === 'ArrowRight' && player.x + 1 < 10) {
-            player.x = player.x + 1
-            return
-          }
-          if (keyPressed === 'ArrowDown' && player.y + 1 < 10) {
-            player.y = player.y + 1
-            return
-          }
-          if (keyPressed === 'ArrowLeft' && player.x - 1 >= 0) {
-            player.x = player.x - 1
-            return
-          }
+        
         }
 
         return {
@@ -85,20 +104,19 @@ function Canvas() {
 
 
       const createKeyboardListener = () => {
-        
+
         const state = {
           observers: [] as any
         }
 
-        function subscribe(obeserverFunction : any){
+        function subscribe(obeserverFunction: any) {
           state.observers.push(obeserverFunction)
         }
 
-        function notifyAll(command : Command) {
-          console.log(`Notifying ${state.observers.length} observers`)
-          console.log(state)
+        function notifyAll(command: Command) {
+          // console.log(`Notifying ${state.observers.length} observers`)
 
-          for (const observerFunction of state.observers){
+          for (const observerFunction of state.observers) {
             observerFunction(command)
           }
         }
@@ -116,8 +134,6 @@ function Canvas() {
 
         document.addEventListener('keydown', handleKeydown)
 
-        console.log(state)
-
         return {
           subscribe
         }
@@ -126,7 +142,9 @@ function Canvas() {
 
       const keyboardListener = createKeyboardListener();
       const game = createGame();
+
       keyboardListener.subscribe(game.movePlayer)
+
 
 
 
