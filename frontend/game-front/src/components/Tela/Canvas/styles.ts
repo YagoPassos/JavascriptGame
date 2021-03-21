@@ -10,4 +10,5 @@ export const CanvasContainer = styled.canvas`
     border: 10px solid gray;
     width: 100%;
     height: 100vh;
+    
 `;

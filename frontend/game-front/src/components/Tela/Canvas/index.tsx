@@ -14,8 +14,9 @@ interface Coordinates {
 }
 
 interface Players {
-  'Bob': Coordinates;
+  'Steve': Coordinates;
   'Paul': Coordinates;
+  'Bob': Coordinates;
 }
 
 interface KeyPressed {
@@ -27,6 +28,7 @@ interface KeyPressed {
 
 type PlayersIndex = keyof Players;
 type KeyIndex = keyof KeyPressed;
+type BobImg = HTMLImageElement;
 
 interface Fruits {
   'fruits': Coordinates;
@@ -48,40 +50,42 @@ function Canvas() {
 
       const canvas = canvasRef.current;
       const context = canvas.getContext('2d');
+           
 
       const createGame = () => {
 
         const state: State = {
           players: {
-            'Bob': { x: 1, y: 1 },
-            'Paul': { x: 1800, y: 500 }
+            'Steve': { x: 1800, y: 1000 },
+            'Paul': { x: 1800, y: 500 },
+            'Bob': { x: 1300, y: 500 }
           },
 
           fruits: {
-            'fruits': { x: 3, y: 1 }
+            'fruits': { x: 1830, y: 0 }
           }
         }
 
         function movePlayer(command: Command) {
           const accepetdMoves: KeyPressed = {
             ArrowUp(player: any) {
-              if(player.y - 1 >= 10) {
-                player.y = player.y - 50
+              if (player.y - 1 >= 5) {
+                player.y = player.y - 10
               }
             },
             ArrowRight(player: any) {
-              if(player.x + 1 < screen.width - 70) {
-                player.x = player.x + 50
+              if (player.x + 1 < screen.width - 34) {
+                player.x = player.x + 10
               }
             },
             ArrowDown(player: any) {
-              if(player.y + 1 < screen.height - 70) {
-                player.y = player.y + 50
+              if (player.y + 1 < screen.height - 34) {
+                player.y = player.y + 10
               }
             },
             ArrowLeft(player: any) {
-              if(player.x - 1 >= 10) {
-                player.x = player.x - 50
+              if (player.x - 1 >= 10) {
+                player.x = player.x - 10
               }
             }
           }
@@ -93,7 +97,7 @@ function Canvas() {
           if (moveFunction) {
             moveFunction(player)
           }
-        
+
         }
 
         return {
@@ -146,9 +150,6 @@ function Canvas() {
       keyboardListener.subscribe(game.movePlayer)
 
 
-
-
-
       if (context) {
         const renderScreen = () => {
           context.clearRect(0, 0, screen.width, screen.height);
@@ -156,14 +157,28 @@ function Canvas() {
           for (const playerId in game.state.players) {
             const player = game.state.players[playerId as PlayersIndex];
 
-            context.fillStyle = 'black';
-            context.fillRect(player.x, player.y, 50, 50);
+            if (playerId === 'Bob') {
+              var img = new Image();
+
+              img.addEventListener('load', ()=>{
+                console.log(img)
+                console.log('teste')
+                context.drawImage(img, player.x, player.y, 5000, 5000)}, false)
+              
+
+              img.src = '../../../img/Bob.png';
+
+
+            } else {
+              context.fillStyle = 'black';
+              context.fillRect(player.x, player.y, 35, 35);
+            }
           }
 
           for (const fruitId in game.state.fruits) {
             const fruit = game.state.fruits[fruitId as FruitsIndex];
             context.fillStyle = 'green';
-            context.fillRect(fruit.x, fruit.y, 50, 50);
+            context.fillRect(fruit.x, fruit.y, 35, 35);
           }
 
           requestAnimationFrame(renderScreen);
@@ -174,7 +189,7 @@ function Canvas() {
   }, [])
 
   return (
-    <CanvasContainer width={screen.width} height={screen.height} ref={canvasRef} />
+      <CanvasContainer width={screen.width} height={screen.height} ref={canvasRef} />
   );
 };
 
