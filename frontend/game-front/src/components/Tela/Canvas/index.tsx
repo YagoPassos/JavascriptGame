@@ -41,6 +41,9 @@ interface State {
   fruits: Fruits;
 }
 
+
+
+
 function Canvas() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -160,16 +163,12 @@ function Canvas() {
             if (playerId === 'Bob') {
               var img = new Image();
 
-              img.addEventListener('load',
-                () => {
+              img.onload = () => {
                   console.log(img)
-                  context.drawImage(img, player.x, player.y)
+                  context.drawImage
                 }
-                , false)
-
-
-              img.src = '../../public/img/Bob.jpg';
-
+              
+              img.src = '../../../../public/img/Bob.jpg';
 
             } else {
               context.fillStyle = 'black';
