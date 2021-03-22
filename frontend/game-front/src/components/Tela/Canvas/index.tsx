@@ -163,7 +163,7 @@ function Canvas() {
 
             if (playerId === 'Bob') {
               var img = new Image();
-              img.src = '../../../img/Bob.svg';
+              img.src = '../../../img/Bob.jpg';
 
               context.drawImage(img, player.x, player.y, 90, 135)
            
