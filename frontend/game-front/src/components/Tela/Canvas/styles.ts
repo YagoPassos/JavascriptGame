@@ -7,10 +7,13 @@ export const CanvasContainer = styled.canvas`
     image-rendering: -moz-crisp-edges;
 
     background: url(${BackgroundImg}) no-repeat center; 
-    background-size: contain;
+    background-size: cover;
 
+    display:block;
     border: 5px solid black;
-    width: 100%;
-    height: 100vh;
+    width: 80%;
+    height: 90%;
+    margin: auto;
+
     
 `;

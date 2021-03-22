@@ -165,18 +165,18 @@ function Canvas() {
               var img = new Image();
               img.src = '../../../img/Bob.svg';
 
-              context.drawImage(img, player.x, player.y, 30, 45)
+              context.drawImage(img, player.x, player.y, 90, 135)
            
             } else {
-              context.fillStyle = 'black';
-              context.fillRect(player.x, player.y, 35, 35);
+              // context.fillStyle = 'black';
+              // context.fillRect(player.x, player.y, 35, 35);
             }
           }
 
           for (const fruitId in game.state.fruits) {
             const fruit = game.state.fruits[fruitId as FruitsIndex];
-            context.fillStyle = 'green';
-            context.fillRect(fruit.x, fruit.y, 35, 35);
+            // context.fillStyle = 'green';
+            // context.fillRect(fruit.x, fruit.y, 35, 35);
           }
 
           requestAnimationFrame(renderScreen);
