@@ -166,6 +166,7 @@ function Canvas() {
               img.src = '../../../img/Bob.jpg';
 
               context.drawImage(img, player.x, player.y, 90, 135)
+              
            
             } else {
               context.fillStyle = 'black';
