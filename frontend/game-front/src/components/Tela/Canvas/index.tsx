@@ -3,7 +3,7 @@ import { CanvasContainer } from './styles';
 
 /* eslint-disable */
 
-interface Command {
+interface MoveCommand {
   playerId: string;
   keyPressed: any;
 }
@@ -14,7 +14,7 @@ interface Coordinates {
 }
 
 interface Players {
-  [key: string]: Object[]
+  [key: string]: Coordinates
 }
 
 interface KeyPressed {
@@ -28,7 +28,7 @@ type PlayersIndex = keyof Players;
 type KeyIndex = keyof KeyPressed;
 
 interface Fruits {
-  'fruits': Coordinates;
+  [key: string]: Coordinates
 }
 
 type FruitsIndex = keyof Fruits;
@@ -73,13 +73,13 @@ function Canvas() {
           }
         }
 
-        function removePlayer(command : Command){
-          const playerIds = command.playerId 
+        function removePlayer(command : MoveCommand){
+          const playerId = command.playerId 
 
           delete state.players[playerId as PlayersIndex]
         }
 
-        function movePlayer(command: Command) {
+        function movePlayer(command: MoveCommand) {
           const accepetdMoves: KeyPressed = {
             ArrowUp(player: any) {
               if (player.y - 1 >= 5) {
@@ -132,7 +132,7 @@ function Canvas() {
           state.observers.push(obeserverFunction)
         }
 
-        function notifyAll(command: Command) {
+        function notifyAll(command: MoveCommand) {
           // console.log(`Notifying ${state.observers.length} observers`)
 
           for (const observerFunction of state.observers) {
@@ -143,7 +143,7 @@ function Canvas() {
           const keyPressed = event.key;
 
 
-          const command: Command = {
+          const command: MoveCommand = {
             playerId: 'Bob',
             keyPressed: keyPressed
           }
@@ -171,7 +171,7 @@ function Canvas() {
           context.clearRect(0, 0, screen.width, screen.height);
 
           for (const playerId in game.state.players) {
-            const player = game.state.players[playerId as PlayersIndex];
+            const player = game.state.players[playerId as PlayersIndex];          
 
             if (playerId === 'Bob') {
               var img = new Image();
