@@ -14,9 +14,7 @@ interface Coordinates {
 }
 
 interface Players {
-  'Steve': Coordinates;
-  'Paul': Coordinates;
-  'Bob': Coordinates;
+  [key: string]: Object[]
 }
 
 interface KeyPressed {
@@ -28,7 +26,6 @@ interface KeyPressed {
 
 type PlayersIndex = keyof Players;
 type KeyIndex = keyof KeyPressed;
-type BobImg = HTMLImageElement;
 
 interface Fruits {
   'fruits': Coordinates;
@@ -57,16 +54,29 @@ function Canvas() {
 
       const createGame = () => {
 
-        const state: State = {
+        const state : State= {
           players: {
-            'Steve': { x: 1800, y: 1000 },
-            'Paul': { x: 1800, y: 500 },
-            'Bob': { x: 10, y: 10 }
+            'Bob': {x: 0, y:0}
           },
 
-          fruits: {
-            'fruits': { x: 1830, y: 0 }
+          fruits: {}
+        }
+
+        function addPlayer(command: any){
+          const playerId = command.playerId;
+          const playerX = command.playerX;
+          const playerY = command.playerY;
+
+          state.players[playerId as PlayersIndex] = {
+            x: playerX,
+            y: playerY
           }
+        }
+
+        function removePlayer(command : Command){
+          const playerIds = command.playerId 
+
+          delete state.players[playerId as PlayersIndex]
         }
 
         function movePlayer(command: Command) {
@@ -97,13 +107,15 @@ function Canvas() {
           const player = game.state.players[command.playerId as PlayersIndex]
           const moveFunction = accepetdMoves[keyPressed as KeyIndex]
 
-          if (moveFunction) {
+          if (player && moveFunction) {
             moveFunction(player)
           }
 
         }
 
         return {
+          addPlayer,
+          removePlayer,
           movePlayer,
           state
         }
