@@ -11,9 +11,10 @@ export const CanvasContainer = styled.canvas`
 
     display:block;
     border: 5px solid black;
-    width: 80%;
-    height: 90%;
+    width: 70%;
+    /* height: 70%; */
     margin: auto;
+    margin-top: 50px;
 
     
 `;

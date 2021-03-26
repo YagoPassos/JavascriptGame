@@ -1,5 +1,8 @@
+import { listeners } from 'node:process';
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { CanvasContainer } from './styles';
+import  createKeyboardListener  from '../../../modules/keyboardListener'
+import createGame from '../../../modules/createGame'
 
 /* eslint-disable */
 
@@ -50,129 +53,20 @@ function Canvas() {
 
       const canvas = canvasRef.current;
       const context = canvas.getContext('2d');
-
-
-      const createGame = () => {
-
-        const state : State= {
-          players: {
-            'Bob': {x: 0, y:0}
-          },
-
-          fruits: {}
-        }
-
-        function addPlayer(command: any){
-          const playerId = command.playerId;
-          const playerX = command.playerX;
-          const playerY = command.playerY;
-
-          state.players[playerId as PlayersIndex] = {
-            x: playerX,
-            y: playerY
-          }
-        }
-
-        function removePlayer(command : MoveCommand){
-          const playerId = command.playerId 
-
-          delete state.players[playerId as PlayersIndex]
-        }
-
-        function movePlayer(command: MoveCommand) {
-          const accepetdMoves: KeyPressed = {
-            ArrowUp(player: any) {
-              if (player.y - 1 >= 5) {
-                player.y = player.y - 10
-              }
-            },
-            ArrowRight(player: any) {
-              if (player.x + 1 < screen.width - 34) {
-                player.x = player.x + 10
-              }
-            },
-            ArrowDown(player: any) {
-              if (player.y + 1 < screen.height - 34) {
-                player.y = player.y + 10
-              }
-            },
-            ArrowLeft(player: any) {
-              if (player.x - 1 >= 10) {
-                player.x = player.x - 10
-              }
-            }
-          }
-
-          const keyPressed = command.keyPressed;
-          const player = game.state.players[command.playerId as PlayersIndex]
-          const moveFunction = accepetdMoves[keyPressed as KeyIndex]
-
-          if (player && moveFunction) {
-            moveFunction(player)
-          }
-
-        }
-
-        return {
-          addPlayer,
-          removePlayer,
-          movePlayer,
-          state
-        }
-      }
-
-
-      const createKeyboardListener = () => {
-
-        const state = {
-          observers: [] as any
-        }
-
-        function subscribe(obeserverFunction: any) {
-          state.observers.push(obeserverFunction)
-        }
-
-        function notifyAll(command: MoveCommand) {
-          // console.log(`Notifying ${state.observers.length} observers`)
-
-          for (const observerFunction of state.observers) {
-            observerFunction(command)
-          }
-        }
-        const handleKeydown = (event: any) => {
-          const keyPressed = event.key;
-
-
-          const command: MoveCommand = {
-            playerId: 'Bob',
-            keyPressed: keyPressed
-          }
-
-          notifyAll(command)
-        }
-
-        document.addEventListener('keydown', handleKeydown)
-
-        return {
-          subscribe
-        }
-
-      }
-
       const keyboardListener = createKeyboardListener();
       const game = createGame();
 
       keyboardListener.subscribe(game.movePlayer)
 
-
-
       if (context) {
+        context.imageSmoothingEnabled = false;
+
         const renderScreen = () => {
           context.clearRect(0, 0, screen.width, screen.height);
 
           for (const playerId in game.state.players) {
-            const player = game.state.players[playerId as PlayersIndex];          
-
+            const player = game.state.players[playerId as PlayersIndex];        
+          
             if (playerId === 'Bob') {
               var img = new Image();
               img.src = '../../../img/Bob.jpg';
