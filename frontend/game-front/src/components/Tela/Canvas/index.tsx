@@ -73,6 +73,7 @@ function Canvas() {
 
               context.drawImage(img, player.x, player.y, 90, 135)
               
+              
            
             } else {
               context.fillStyle = 'black';
