@@ -79,7 +79,7 @@ function Canvas() {
           }   
           for (const fruitId in game.state.fruits) {
             const fruit = game.state.fruits[fruitId as FruitsIndex];
-            context.fillStyle = 'green';
+            context.fillStyle = 'blue';
             context.fillRect(fruit.x, fruit.y, 35, 35);
           }
 
