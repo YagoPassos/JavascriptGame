@@ -64,6 +64,8 @@ function Canvas() {
 
       keyboardListener.subscribe(game.movePlayer)
 
+      game.moveBot();
+  
       if (context) {
         context.imageSmoothingEnabled = false;
 
@@ -74,10 +76,10 @@ function Canvas() {
             const player = game.state.players[playerId as PlayersIndex];        
           
             if (playerId === 'Bob') {
-              var img = new Image();
-              img.src = '../../../img/Bob.jpg';
+              var bob = new Image();
+              bob.src = '../../../img/Bob.jpg';
 
-              context.drawImage(img, player.x, player.y, 90, 135)           
+              context.drawImage(bob, player.x, player.y, 90, 135)           
             } else {
               context.fillStyle = 'black';
               context.fillRect(player.x, player.y, 35, 35);
@@ -88,19 +90,22 @@ function Canvas() {
             context.fillStyle = 'red';
             context.fillRect(fruit.x, fruit.y, 35, 35);
 
-            var img = new Image();
-              img.src = '../../../img/Treasure.jpg';
+            var treasure = new Image();
+            treasure.src = '../../../img/Treasure.png';
 
-              context.drawImage(img, fruit.x, fruit.y, 35, 35)  
+              context.drawImage(treasure, fruit.x, fruit.y, 35, 35)  
           }
 
           for (const botID in game.state.bot) {
-            const bot = game.state.bot[botID as BotIndex ]        
+            const bot = game.state.bot[botID as BotIndex ]     
+            
+            context.fillStyle = 'white';
+            context.fillRect(bot.x, bot.y, 35, 35);
           
-              var img = new Image();
-              img.src = '../../../img/Orc.jpg';
+              var orc = new Image();
+              orc.src = '../../../img/Orc.png';
 
-              context.drawImage(img, bot.x, bot.y, 90, 135)    
+              context.drawImage(orc, bot.x, bot.y, 150, 200)    
           }
           requestAnimationFrame(renderScreen);
         }

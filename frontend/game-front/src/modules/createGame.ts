@@ -50,11 +50,11 @@ export default function createGame() {
         },
 
         bot: {
-          'Orc': {x: 0, y:0}
+          'Orc': {x: 1, y:1}
         },
       
         fruits: {
-          'fruit1': { x: 1800, y: 1000}
+          'fruit': { x: 1500, y: 500}
         },
 
         screen: {
@@ -102,26 +102,33 @@ export default function createGame() {
         y: botY
       }
     }
+
     function removeFruit(command : any){
       const fruitId = command.fruitId 
 
       delete state.fruits[fruitId as FruitsIndex]
     }
 
+    function moveBot(){
+      const bot = state.bot['Orc'];
+        console.log(bot)
+    
+    }
+
     function movePlayer(command: MoveCommand) {
       const accepetdMoves: KeyPressed = {
         ArrowUp(player: any) {
-          if (player.y - 1 >= 5) {
+          if (player.y - 1 >= 10) {
             player.y = player.y - 20
           }
         },
         ArrowRight(player: any) {
-          if (player.x + 1 < state.screen.width - 34) {
+          if (player.x + 1 < state.screen.width - 98) {
             player.x = player.x + 20
           }
         },
         ArrowDown(player: any) {
-          if (player.y + 1 < state.screen.height - 34) {
+          if (player.y + 1 < state.screen.height - 150) {
             player.y = player.y + 20
           }
         },
@@ -138,13 +145,30 @@ export default function createGame() {
             for (const fruitId in state.fruits){
               const fruit = state.fruits[fruitId as FruitsIndex]
 
-              if (player.x === fruit.x && player.y + 2 === fruit.y){
+              if (player.x === fruit.x && player.y === fruit.y){
+
                 removeFruit({ fruitId: fruitId})
+                
+                console.log( state.fruits['fruit'])
+
+                state.fruits['fruit'] = {
+                  x: Math.random() * (0 - 1980) + 1980,
+                  y: Math.random() * (0 - 1080) + 1080
+                }
+
+                console.log( state.fruits['fruit'])
               }
-            }
+            }      
+
+              if (player.x === bot.x && player.y === bot.y){
+                alert("LOST")
+              }
+            
+            
       }
       const keyPressed = command.keyPressed;
       const playerId = command.playerId;
+      const bot = state.bot['Orc']
       const player = state.players[command.playerId as PlayersIndex]
       const moveFunction = accepetdMoves[keyPressed as KeyIndex]
 
@@ -162,6 +186,7 @@ export default function createGame() {
       removePlayer,
       movePlayer,
       addBot,
+      moveBot,
       state
     }
 
