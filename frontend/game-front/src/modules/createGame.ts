@@ -25,12 +25,18 @@ interface MoveCommand {
   interface Fruits {
     [key: string]: Coordinates
   }
+
+  interface Bot {
+    [key: string]: Coordinates
+  }
   
   type FruitsIndex = keyof Fruits;
+  type BotIndex = keyof Bot;
   
   interface State {
     players: Players;
     fruits: Fruits;
+    bot:Bot,
     screen: any;
   }
 
@@ -41,6 +47,10 @@ export default function createGame() {
     const state : State= {
         players: {
           'Bob': {x: 0, y:0}
+        },
+
+        bot: {
+          'Orc': {x: 0, y:0}
         },
       
         fruits: {
@@ -82,6 +92,16 @@ export default function createGame() {
       }
     }
 
+    function addBot(command: any){
+      const botId = command.botId;
+      const botX = command.botX;
+      const botY = command.botY;
+
+      state.bot[botId as BotIndex] = {
+        x: botX,
+        y: botY
+      }
+    }
     function removeFruit(command : any){
       const fruitId = command.fruitId 
 
@@ -118,7 +138,7 @@ export default function createGame() {
             for (const fruitId in state.fruits){
               const fruit = state.fruits[fruitId as FruitsIndex]
 
-              if (player.x === fruit.x && player.y === fruit.y){
+              if (player.x === fruit.x && player.y + 2 === fruit.y){
                 removeFruit({ fruitId: fruitId})
               }
             }
@@ -141,6 +161,7 @@ export default function createGame() {
       addPlayer,
       removePlayer,
       movePlayer,
+      addBot,
       state
     }
 

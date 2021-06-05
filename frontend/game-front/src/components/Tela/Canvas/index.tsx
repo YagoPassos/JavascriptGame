@@ -34,11 +34,17 @@ interface Fruits {
   [key: string]: Coordinates
 }
 
+interface Bot {
+  [key: string]: Coordinates
+}
+
 type FruitsIndex = keyof Fruits;
+type BotIndex = keyof Bot;
 
 interface State {
   players: Players;
   fruits: Fruits;
+  bot: Bot;
 }
 
 
@@ -79,10 +85,23 @@ function Canvas() {
           }   
           for (const fruitId in game.state.fruits) {
             const fruit = game.state.fruits[fruitId as FruitsIndex];
-            context.fillStyle = 'blue';
+            context.fillStyle = 'red';
             context.fillRect(fruit.x, fruit.y, 35, 35);
+
+            var img = new Image();
+              img.src = '../../../img/Treasure.jpg';
+
+              context.drawImage(img, fruit.x, fruit.y, 35, 35)  
           }
 
+          for (const botID in game.state.bot) {
+            const bot = game.state.bot[botID as BotIndex ]        
+          
+              var img = new Image();
+              img.src = '../../../img/Orc.jpg';
+
+              context.drawImage(img, bot.x, bot.y, 90, 135)    
+          }
           requestAnimationFrame(renderScreen);
         }
         renderScreen();
