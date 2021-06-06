@@ -63,8 +63,7 @@ function Canvas() {
       const game = createGame();
 
       keyboardListener.subscribe(game.movePlayer)
-
-      game.moveBot();
+      
   
       if (context) {
         context.imageSmoothingEnabled = false;
@@ -72,26 +71,25 @@ function Canvas() {
         const renderScreen = () => {
           context.clearRect(0, 0, screen.width, screen.height);
 
-          for (const playerId in game.state.players) {
+          game.moveBot();
+
+            for (const playerId in game.state.players) {
             const player = game.state.players[playerId as PlayersIndex];        
           
-            if (playerId === 'Bob') {
-              var bob = new Image();
-              bob.src = '../../../img/Bob.jpg';
+           
+              var Doug = new Image();
+              Doug.src = '../../../img/Doug.svg';
 
-              context.drawImage(bob, player.x, player.y, 90, 135)           
-            } else {
-              context.fillStyle = 'black';
-              context.fillRect(player.x, player.y, 35, 35);
-            }
+              context.drawImage(Doug, player.x, player.y, 100, 150)           
+          
           }   
           for (const fruitId in game.state.fruits) {
             const fruit = game.state.fruits[fruitId as FruitsIndex];
             context.fillStyle = 'red';
-            context.fillRect(fruit.x, fruit.y, 35, 35);
+            context.fillRect(fruit.x, fruit.y, 100, 100);
 
             var treasure = new Image();
-            treasure.src = '../../../img/Treasure.png';
+            treasure.src = '../../../img/Bob.png';
 
               context.drawImage(treasure, fruit.x, fruit.y, 35, 35)  
           }
@@ -100,12 +98,12 @@ function Canvas() {
             const bot = game.state.bot[botID as BotIndex ]     
             
             context.fillStyle = 'white';
-            context.fillRect(bot.x, bot.y, 35, 35);
+            context.fillRect(bot.x, bot.y, 100, 100);
           
               var orc = new Image();
               orc.src = '../../../img/Orc.png';
 
-              context.drawImage(orc, bot.x, bot.y, 150, 200)    
+              context.drawImage(orc, bot.x, bot.y, 100, 100)    
           }
           requestAnimationFrame(renderScreen);
         }
