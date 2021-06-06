@@ -114,8 +114,8 @@ export default function createGame() {
     delete state.fruits[fruitId as FruitsIndex]
   }
 
-  var vx = 10;
-  var vy = 10;
+  var vx = 5;
+  var vy = 5;
 
 
   function moveBot() {
@@ -127,10 +127,10 @@ export default function createGame() {
     if (bot.x > state.screen.width -100){
       vx = -vx;
     }
-    if (bot.y < 0){
+    if (bot.y < 80){
       vy = -vy;
     }
-    if (bot.y > state.screen.height -100){
+    if (bot.y > state.screen.height -130){
       vy = -vy;
     }
 
@@ -144,7 +144,7 @@ export default function createGame() {
   function movePlayer(command: MoveCommand) {
     const accepetdMoves: KeyPressed = {
       ArrowUp(player: any) {
-        if (player.y - 1 >= 10) {
+        if (player.y - 1 >= 80) {
           player.y -= 20
         }
       },
@@ -201,7 +201,7 @@ export default function createGame() {
 
           state.fruits['fruit'] = {
             x: Math.floor(Math.random() * (0 - 1900) + 1900),
-            y: Math.floor(Math.random() * (0 - 1000) + 1000)
+            y: Math.floor(Math.random() * (150 - 1000) + 1000)
           }
 
         }

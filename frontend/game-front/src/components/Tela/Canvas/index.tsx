@@ -1,7 +1,7 @@
 import { listeners } from 'node:process';
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { CanvasContainer } from './styles';
-import  createKeyboardListener  from '../../../modules/keyboardListener'
+import createKeyboardListener from '../../../modules/keyboardListener'
 import createGame from '../../../modules/createGame'
 
 /* eslint-disable */
@@ -63,8 +63,8 @@ function Canvas() {
       const game = createGame();
 
       keyboardListener.subscribe(game.movePlayer)
-      
-  
+
+
       if (context) {
         context.imageSmoothingEnabled = false;
 
@@ -73,38 +73,38 @@ function Canvas() {
 
           game.moveBot();
 
-            for (const playerId in game.state.players) {
-            const player = game.state.players[playerId as PlayersIndex];        
-          
-           
-              var Doug = new Image();
-              Doug.src = '../../../img/Doug.svg';
+          for (const playerId in game.state.players) {
+            const player = game.state.players[playerId as PlayersIndex];
 
-              context.drawImage(Doug, player.x, player.y, 100, 150)           
-          
-          }   
+
+            var Doug = new Image();
+            Doug.src = '../../../img/Doug.png';
+
+            context.drawImage(Doug, player.x, player.y, 100, 150)
+
+          }
           for (const fruitId in game.state.fruits) {
             const fruit = game.state.fruits[fruitId as FruitsIndex];
-            context.fillStyle = 'red';
-            context.fillRect(fruit.x, fruit.y, 100, 100);
+            // context.fillStyle = 'red';
+            // context.fillRect(fruit.x, fruit.y, 100, 100);
 
             var treasure = new Image();
-            treasure.src = '../../../img/Bob.png';
+            treasure.src = '../../../img/Treasure.png';
 
-              context.drawImage(treasure, fruit.x, fruit.y, 35, 35)  
+            context.drawImage(treasure, fruit.x, fruit.y, 100, 100)
           }
 
           for (const botID in game.state.bot) {
-            const bot = game.state.bot[botID as BotIndex ]     
-            
-            context.fillStyle = 'white';
-            context.fillRect(bot.x, bot.y, 100, 100);
-          
-              var orc = new Image();
-              orc.src = '../../../img/Orc.png';
+            const bot = game.state.bot[botID as BotIndex]
 
-              context.drawImage(orc, bot.x, bot.y, 100, 100)    
+            var orc = new Image();
+            orc.src = '../../../img/Orc.png';
+
+            context.drawImage(orc, bot.x, bot.y, 120, 150)
           }
+          context.fillStyle = 'white'
+          context.font = "120px";
+          context.fillText(`POINTS : ${game.state.points['Points']}`, 700, 100)
           requestAnimationFrame(renderScreen);
         }
         renderScreen();
