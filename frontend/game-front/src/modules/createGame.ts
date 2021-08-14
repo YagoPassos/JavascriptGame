@@ -22,7 +22,7 @@ interface KeyPressed {
 type PlayersIndex = keyof Players;
 type KeyIndex = keyof KeyPressed;
 
-interface Fruits {
+interface Chests {
   [key: string]: Coordinates
 }
 
@@ -30,12 +30,12 @@ interface Bot {
   [key: string]: Coordinates
 }
 
-type FruitsIndex = keyof Fruits;
+type ChestsIndex = keyof Chests;
 type BotIndex = keyof Bot;
 
 interface State {
   players: Players;
-  fruits: Fruits;
+  chests: Chests;
   bot: Bot,
   screen: any;
   points: any;
@@ -51,11 +51,11 @@ export default function createGame() {
     },
 
     bot: {
-      'Orc': { x: Math.floor(Math.random() * (0 - 1850) + 1850), y: Math.floor(Math.random() * (0 - 1000) + 1000) }
+      'Orc': { x: Math.floor(Math.random() * (0 - 1800) + 1800), y: Math.floor(Math.random() * (150 - 1000) + 1000) }
     },
 
-    fruits: {
-      'fruit': { x: Math.floor(Math.random() * (0 - 1850) + 1850), y: Math.floor(Math.random() * (0 - 1000) + 1000) }
+    chests: {
+      'chest': { x: Math.floor(Math.random() * (0 - 1800) + 1800), y: Math.floor(Math.random() * (150 - 1000) + 1000) }
     },
 
     screen: {
@@ -66,7 +66,7 @@ export default function createGame() {
     points: {
       'Points': 0
     }
-    
+
   }
 
   function addPlayer(command: any) {
@@ -86,14 +86,14 @@ export default function createGame() {
     delete state.players[playerId as PlayersIndex]
   }
 
-  function addFruit(command: any) {
-    const fruitId = command.fruitId;
-    const fruitX = command.fruitX;
-    const fruitY = command.fruitY;
+  function addChest(command: any) {
+    const chestId = command.chestId;
+    const chestX = command.chestX;
+    const chestY = command.chestY;
 
-    state.fruits[fruitId as FruitsIndex] = {
-      x: fruitX,
-      y: fruitY
+    state.chests[chestId as ChestsIndex] = {
+      x: chestX,
+      y: chestY
     }
   }
 
@@ -108,37 +108,62 @@ export default function createGame() {
     }
   }
 
-  function removeFruit(command: any) {
-    const fruitId = command.fruitId
+  function removeChest(command: any) {
+    const chestId = command.chestId
 
-    delete state.fruits[fruitId as FruitsIndex]
+    delete state.chests[chestId as ChestsIndex]
   }
 
-  var vx = 5;
-  var vy = 5;
+  var vx = 6;
+  var vy = 6;
 
 
   function moveBot() {
     const bot = state.bot['Orc'];
-  
-    if (bot.x < 0){
+
+    if (bot.x < 0) {
       vx = -vx;
     }
-    if (bot.x > state.screen.width -100){
+    if (bot.x > state.screen.width - 100) {
       vx = -vx;
     }
-    if (bot.y < 80){
+    if (bot.y < 80) {
       vy = -vy;
     }
-    if (bot.y > state.screen.height -130){
+    if (bot.y > state.screen.height - 130) {
       vy = -vy;
     }
 
     bot.x += vx;
     bot.y += vy;
-    
-  }
 
+  }
+  function checkForCollisionBot() {
+    const player = state.players["Bob"]
+    const bot = state.bot['Orc']
+    
+
+    const playerCenterX = player.x + 50;
+    const playerCenterY = player.y + 75; 
+
+    const botCenterX = bot.x + 50;
+    const botCenterY = bot.y + 50;
+
+    var catBotX = playerCenterX - botCenterX;
+    var catBotY = playerCenterY - botCenterY;
+
+    var sumX = 50 + 50;
+    var sumY = 75 + 50;
+
+    if (Math.abs(catBotX) < sumX && Math.abs(catBotY) < sumY) {
+      alert(`VOCÊ PERDEU!! Sua Pontuação foi: ${state.points['Points']}`)
+
+      state.bot['Orc'] = { x: Math.floor(Math.random() * (0 - 1800) + 1800), y: Math.floor(Math.random() * (150 - 1000) + 1000)}
+      state.chests['chest'] = { x: Math.floor(Math.random() * (0 - 1800) + 1800), y: Math.floor(Math.random() * (150 - 1000) + 1000)}
+
+      state.points['Points'] = 0;
+    }
+  }
 
 
   function movePlayer(command: MoveCommand) {
@@ -170,55 +195,35 @@ export default function createGame() {
 
 
 
-      for (const fruitId in state.fruits) {
-        const fruit = state.fruits[fruitId as FruitsIndex]
+      for (const chestId in state.chests) {
+        const chest = state.chests[chestId as ChestsIndex]
 
         const playerCenterX = player.x + 50;
         const playerCenterY = player.y + 75;
 
-        const fruitCenterX = fruit.x + 50;
-        const fruitCenterY = fruit.y + 50;
+        const chestCenterX = chest.x + 50;
+        const chestCenterY = chest.y + 50;
 
-        const botCenterX = bot.x + 50;
-        const botCenterY = bot.y + 50;
-
-        var catFruitX = playerCenterX - fruitCenterX;
-        var catFruitY = playerCenterY - fruitCenterY;
-
-        var catBotX = playerCenterX - botCenterX;
-        var catBotY = playerCenterY - botCenterY;
+        var catChestX = playerCenterX - chestCenterX;
+        var catChestY = playerCenterY - chestCenterY;
 
         var sumX = 50 + 50;
         var sumY = 75 + 50;
 
-        if (Math.abs(catFruitX) < sumX && Math.abs(catFruitY) < sumY) {
+        if (Math.abs(catChestX) < sumX && Math.abs(catChestY) < sumY) {
 
-          state.points['Points']++ 
+          state.points['Points']++
 
           console.log(state.points['Points'])
 
-          removeFruit({ fruitId: fruitId })
+          removeChest({ chestId: chestId })
 
-          state.fruits['fruit'] = {
-            x: Math.floor(Math.random() * (0 - 1900) + 1900),
+          state.chests['chest'] = {
+            x: Math.floor(Math.random() * (0 - 1800) + 1800),
             y: Math.floor(Math.random() * (150 - 1000) + 1000)
           }
-
         }
-
-        if (Math.abs(catBotX) < sumX && Math.abs(catBotY) < sumY) {
-          alert(`VOCÊ PERDEU!! Sua Pontuação foi: ${state.points['Points']}`)
-
-          state.points['Points'] = 0;
-
-          console.log("LOST")
-        }
-
       }
-
-
-
-
     }
     const keyPressed = command.keyPressed;
     const playerId = command.playerId;
@@ -234,13 +239,14 @@ export default function createGame() {
   }
 
   return {
-    addFruit,
-    removeFruit,
+    addChest,
+    removeChest,
     addPlayer,
     removePlayer,
     movePlayer,
     addBot,
     moveBot,
+    checkForCollisionBot,
     state
   }
 

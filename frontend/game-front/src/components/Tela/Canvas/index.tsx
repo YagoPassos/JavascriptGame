@@ -30,7 +30,7 @@ interface KeyPressed {
 type PlayersIndex = keyof Players;
 type KeyIndex = keyof KeyPressed;
 
-interface Fruits {
+interface Chests {
   [key: string]: Coordinates
 }
 
@@ -38,12 +38,12 @@ interface Bot {
   [key: string]: Coordinates
 }
 
-type FruitsIndex = keyof Fruits;
+type ChestsIndex = keyof Chests;
 type BotIndex = keyof Bot;
 
 interface State {
   players: Players;
-  fruits: Fruits;
+  chests: Chests;
   bot: Bot;
 }
 
@@ -72,6 +72,7 @@ function Canvas() {
           context.clearRect(0, 0, screen.width, screen.height);
 
           game.moveBot();
+          game.checkForCollisionBot();
 
           for (const playerId in game.state.players) {
             const player = game.state.players[playerId as PlayersIndex];
@@ -83,15 +84,15 @@ function Canvas() {
             context.drawImage(Doug, player.x, player.y, 100, 150)
 
           }
-          for (const fruitId in game.state.fruits) {
-            const fruit = game.state.fruits[fruitId as FruitsIndex];
+          for (const chestId in game.state.chests) {
+            const chest = game.state.chests[chestId as ChestsIndex];
             // context.fillStyle = 'red';
-            // context.fillRect(fruit.x, fruit.y, 100, 100);
+            // context.fillRect(chest.x, chest.y, 100, 100);
 
             var treasure = new Image();
             treasure.src = '../../../img/Treasure.png';
 
-            context.drawImage(treasure, fruit.x, fruit.y, 100, 100)
+            context.drawImage(treasure, chest.x, chest.y, 100, 100)
           }
 
           for (const botID in game.state.bot) {
@@ -103,8 +104,8 @@ function Canvas() {
             context.drawImage(orc, bot.x, bot.y, 120, 150)
           }
           context.fillStyle = 'white'
-          context.font = "120px";
-          context.fillText(`POINTS : ${game.state.points['Points']}`, 700, 100)
+          context.font = "120px Arial";
+          context.fillText(`POINTS : ${game.state.points['Points']}`, 650, 100)
           requestAnimationFrame(renderScreen);
         }
         renderScreen();
