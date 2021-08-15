@@ -4,7 +4,7 @@
 
 This <b>Game</b> was made for an College Project and i take this oportunity for praticing <b>Typescritp, Javascript e and little bit of ReactJS.</b>
 
-<img src="JSGame.gif" width="250px" />
+<img src="JSGame.gif" width="500px" />
 </h4><br>
 
 
